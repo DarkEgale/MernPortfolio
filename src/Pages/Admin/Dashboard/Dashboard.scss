@@ -1,0 +1,150 @@
+@use '../../../variables.scss' as v;
+@use '../../../global.scss' as g;
+
+.dashboard-container {
+    padding: 40px;
+    background-color: v.$bg-soft;
+    min-height: 100vh;
+
+    .dashboard-header {
+        @include g.flex(space-between, center);
+        margin-bottom: 30px;
+
+        h1 {
+            color: v.$text-main;
+            font-size: 1.8rem;
+        }
+
+        p {
+            color: v.$text-muted;
+        }
+
+        .add-btn {
+            @include g.button-style(v.$primary, v.$bg-white);
+            @include g.flex(center, center);
+            gap: 8px;
+            padding: 10px 20px;
+        }
+    }
+
+    .table-section {
+        background: v.$bg-white;
+        border-radius: v.$radius-lg;
+        box-shadow: v.$shadow-xl;
+        overflow: hidden;
+
+        .project-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+
+            thead {
+                background: v.$bg-soft;
+                tr th {
+                    padding: 15px 20px;
+                    color: v.$text-main;
+                    font-weight: 600;
+                    border-bottom: 1px solid v.$border;
+                }
+            }
+
+            tbody tr {
+                border-bottom: 1px solid v.$border;
+                transition: v.$transition;
+
+                &:hover {
+                    background: rgba(v.$bg-soft, 0.5);
+                }
+
+                td {
+                    padding: 15px 20px;
+                    vertical-align: middle;
+                    color: v.$text-main;
+
+                    .table-img {
+                        width: 60px;
+                        height: 40px;
+                        object-fit: cover;
+                        border-radius: v.$radius-md;
+                    }
+
+                    .tech-tags {
+                        display: flex;
+                        flex-wrap: wrap;
+                        gap: 5px;
+
+                        .tag {
+                            background: v.$primary-light;
+                            color: v.$primary;
+                            padding: 2px 8px;
+                            border-radius: v.$radius-full;
+                            font-size: 0.75rem;
+                            font-weight: 500;
+                        }
+                    }
+
+                    &.actions {
+                        display: flex;
+                        gap: 10px;
+
+                        button {
+                            background: none;
+                            border: none;
+                            cursor: pointer;
+                            padding: 8px;
+                            border-radius: v.$radius-md;
+                            transition: v.$transition;
+
+                            &.edit-icon {
+                                color: #3b82f6;
+                                &:hover { background: #eff6ff; }
+                            }
+
+                            &.delete-icon {
+                                color: #ef4444;
+                                &:hover { background: #fef2f2; }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    @include g.flex(center, center);
+    z-index: 1000;
+    padding: 20px;
+
+    .modal-content {
+        background: v.$bg-white;
+        width: 100%;
+        max-width: 700px;
+        max-height: 90vh;
+        overflow-y: auto;
+        position: relative;
+        padding: 30px;
+        border-radius: v.$radius-lg;
+        box-shadow: v.$shadow-xl;
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: v.$text-muted;
+            &:hover { color: v.$primary; }
+        }
+    }
+}

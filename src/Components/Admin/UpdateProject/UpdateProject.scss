@@ -1,0 +1,118 @@
+@use '../../../variables.scss' as v;
+@use '../../../global.scss' as g;
+
+section {
+    min-height: 100vh;
+    padding: 60px 20px;
+    background-color: v.$bg-soft;
+    @include g.flex(center, center, column);
+
+    h2 {
+        margin-bottom: 40px;
+        color: v.$text-main;
+        font-size: 2rem;
+        font-weight: 700;
+        position: relative;
+
+        &::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 4px;
+            background: v.$primary;
+            border-radius: v.$radius-full;
+        }
+    }
+
+    form {
+        width: 100%;
+        max-width: 650px;
+        background: v.$bg-white;
+        padding: 40px;
+        border-radius: v.$radius-lg;
+        box-shadow: v.$shadow-xl;
+        @include g.flex(flex-start, stretch, column);
+        gap: 25px;
+
+        .input-group {
+            @include g.flex(flex-start, stretch, column);
+            gap: 10px;
+
+            label {
+                font-weight: 600;
+                color: v.$text-main;
+                font-size: 0.95rem;
+            }
+
+            input[type="text"],
+            textarea {
+                width: 100%;
+                padding: 14px 18px;
+                border: 1px solid v.$border;
+                border-radius: v.$radius-md;
+                background: v.$bg-soft;
+                font-size: 1rem;
+                transition: v.$transition;
+                box-shadow: v.$shadow-inner;
+
+                &:focus {
+                    outline: none;
+                    border-color: v.$primary;
+                    background: v.$bg-white;
+                    box-shadow: 0 0 0 4px rgba(v.$primary, 0.1);
+                }
+            }
+
+            textarea {
+                min-height: 150px;
+                resize: vertical;
+            }
+
+            input[type="file"] {
+                background: v.$bg-soft;
+                padding: 15px;
+                border: 2px dashed v.$border;
+                border-radius: v.$radius-md;
+                cursor: pointer;
+                transition: v.$transition;
+
+                &:hover {
+                    border-color: v.$primary;
+                }
+
+                &::file-selector-button {
+                    @include g.button-style(v.$primary-light, v.$primary);
+                    border: none;
+                    margin-right: 15px;
+                    padding: 8px 15px;
+                    font-size: 0.85rem;
+                }
+            }
+
+            small {
+                color: v.$text-muted;
+                font-size: 0.8rem;
+                margin-top: -5px;
+            }
+        }
+
+        button[type="submit"] {
+            @include g.button-style(v.$primary, v.$bg-white);
+            margin-top: 15px;
+            padding: 16px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            box-shadow: v.$shadow-primary;
+
+            &:disabled {
+                background-color: v.$border !important;
+                cursor: not-allowed;
+                transform: none;
+                box-shadow: none;
+            }
+        }
+    }
+}

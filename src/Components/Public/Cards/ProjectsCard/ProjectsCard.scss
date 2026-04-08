@@ -1,0 +1,38 @@
+@use '../../../../variables.scss' as v;
+@use '../../../../global.scss' as g;
+
+.card-body{
+    @include g.card-style;
+    @include g.flex(center,center,column);
+    @include g.glass-effect;
+    .card-top{
+        max-width: 400px;
+        img{
+            max-width: 400px;
+            width: 100%;
+            border-radius: 20px;
+            :hover{
+                border: none;
+            }
+        }
+    }
+    .card-bottom{
+        @include g.flex(center,center,column);
+        .techStack{
+            @include g.flex(center,center,row);
+            gap: 20px;
+
+            li{
+                background: v.$success;
+                color: v.$text-muted;
+                padding: 2px;
+                border-radius:5px; 
+                font-size: 12px;
+                list-style: none;
+            }
+        }
+        button{
+            @include g.button-style(v.$primary,v.$text-main);
+        }
+    }
+}

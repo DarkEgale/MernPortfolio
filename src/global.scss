@@ -1,0 +1,76 @@
+@use './variables' as v;
+
+// ১. ফ্লেক্সবক্স কন্টেইনার
+@mixin flex($justify: center, $align: center, $direction: row) {
+  display: flex;
+  justify-content: $justify;
+  align-items: $align;
+  flex-direction: $direction;
+}
+
+// ২. গ্রিড লেআউট
+@mixin grid($min-width: 200px, $gap: 20px) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax($min-width, 1fr));
+  gap: $gap;
+}
+
+// ৩. বাটন স্টাইল মিক্সিন
+// ডিফল্ট ভ্যালুতেও v. ব্যবহার করতে হবে
+@mixin button-style($bg: v.$primary, $color: v.$bg-white) {
+  padding: 10px 24px;
+  border-radius: v.$radius-md; // v. যোগ করা হয়েছে
+  background-color: $bg;
+  color: $color;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: v.$transition; // variables ফাইল থেকে আসছে
+  box-shadow: v.$shadow-sm;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: v.$shadow-md;
+    filter: brightness(1.1);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+// ৪. রেসপন্সিভ কার্ড স্টাইল
+@mixin card-style {
+  background: v.$bg-soft;
+  border: 1px solid v.$border;
+  border-radius: v.$radius-sm;
+  padding: 20px;
+  box-shadow: v.$shadow-md;
+  transition: v.$transition;
+
+  &:hover {
+    box-shadow: v.$shadow-lg;
+    transform: translateY(-5px);
+    border-color: transparent;
+  }
+}
+
+// ৫. টেক্সট ট্রাঙ্কেশন
+@mixin text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// ৬. গ্লাস-মরফিজম
+@mixin glass-effect {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+// ৭. রেসপন্সিভ মিডিয়া কোয়েরি
+@mixin mobile {
+  @media (max-width: 768px) { @content; }
+}

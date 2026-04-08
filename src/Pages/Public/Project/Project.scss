@@ -1,0 +1,12 @@
+@use '../../../variables.scss' as v;
+@use '../../../global.scss' as g;
+
+  .projects-grid {
+    @include g.grid(400px, 20px);
+    width: 100%;
+    justify-content: center;
+    @media (max-width: 768px) {
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+    }
+  }

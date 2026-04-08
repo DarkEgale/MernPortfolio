@@ -1,0 +1,84 @@
+@use '../../../variables.scss' as v;
+@use '../../../global.scss' as g;
+
+.login-container {
+    min-height: 100vh;
+    background-color: v.$bg-soft;
+    @include g.flex(center, center, column);
+    padding: 20px;
+
+    .login-card {
+        width: 100%;
+        max-width: 400px;
+        background: v.$bg-white;
+        padding: 40px;
+        border-radius: v.$radius-lg;
+        box-shadow: v.$shadow-xl;
+        @include g.flex(flex-start, stretch, column);
+        gap: 25px;
+
+        header {
+            text-align: center;
+            
+            h1 {
+                color: v.$text-main;
+                font-size: 1.8rem;
+                margin-bottom: 8px;
+            }
+
+            p {
+                color: v.$text-muted;
+                font-size: 0.9rem;
+            }
+        }
+
+        form {
+            @include g.flex(flex-start, stretch, column);
+            gap: 20px;
+
+            .input-group {
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+
+                label {
+                    font-weight: 600;
+                    font-size: 0.85rem;
+                    color: v.$text-main;
+                }
+
+                input {
+                    width: 100%;
+                    padding: 12px 16px;
+                    border: 1px solid v.$border;
+                    border-radius: v.$radius-md;
+                    background: v.$bg-white;
+                    font-size: 1rem;
+                    transition: v.$transition;
+                    box-shadow: v.$shadow-inner;
+
+                    &:focus {
+                        outline: none;
+                        border-color: v.$primary;
+                        box-shadow: 0 0 0 3px rgba(v.$primary, 0.1);
+                    }
+                }
+            }
+
+            button[type="submit"] {
+                @include g.button-style(v.$primary, v.$bg-white);
+                padding: 14px;
+                font-size: 1rem;
+                box-shadow: v.$shadow-primary;
+                margin-top: 10px;
+
+                &:disabled {
+                    background-color: v.$border !important;
+                    cursor: not-allowed;
+                    box-shadow: none;
+                    transform: none;
+                }
+            }
+        }
+    }
+}

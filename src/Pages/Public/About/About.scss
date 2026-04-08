@@ -1,0 +1,137 @@
+@use '../../../variables.scss' as v;
+@use '../../../global.scss' as g;
+
+.about-page {
+    padding: 100px 0;
+    background-color: v.$bg-soft;
+    overflow-x: hidden;
+
+    .container {
+        width: 90%;
+        max-width: 1100px;
+        margin: 0 auto;
+    }
+
+
+    .about-intro {
+        display: flex;
+        align-items: center;
+        gap: 60px;
+        margin-bottom: 120px;
+
+        @media (max-width: 768px) {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .text-side {
+            flex: 1;
+            .badge {
+                color: v.$primary;
+                font-weight: bold;
+                letter-spacing: 2px;
+                text-transform: uppercase;
+                font-size: 0.9rem;
+            }
+            h1 {
+                font-size: 3rem;
+                margin: 20px 0;
+                color: v.$text-main;
+                span { color: v.$primary; }
+            }
+            p {
+                color: v.$text-muted;
+                line-height: 1.8;
+                font-size: 1.1rem;
+                margin-bottom: 30px;
+            }
+            .info-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 15px;
+                .info-item {
+                    color: v.$text-main;
+                    font-size: 0.95rem;
+                }
+            }
+        }
+
+        .image-side {
+            flex: 0.8;
+            .img-wrapper {
+                position: relative;
+                &::before {
+                    content: '';
+                    position: absolute;
+                    top: 20px;
+                    left: 20px;
+                    width: 100%;
+                    height: 100%;
+                    border: 2px solid v.$primary;
+                    background: v.$primary;
+                    border-radius: 20px;
+                    z-index: -1;
+                }
+                img {
+                    width: 100%;
+                    max-width: 500px;
+                    border-radius: 20px;
+                    display: block;
+                    background-color: #ddd;
+                    border-radius: 20px;
+                }
+            }
+        }
+    }
+
+
+    .skills-section {
+        margin-bottom: 100px;
+        max-height: fit-content;
+        h2 {
+            text-align: center;
+            margin-bottom: 50px;
+            font-size: 2.2rem;
+        }
+
+        .skills-grid {
+            @include g.grid(450px, 40px); 
+            .skill-item {
+                .skill-labels {
+                    display: flex;
+                    justify-content: space-between;
+                    margin-bottom: 10px;
+                    font-weight: 600;
+                }
+                .bar-bg {
+                    height: 8px;
+                    background: #e0e0e0;
+                    border-radius: 10px;
+                    overflow: hidden;
+                    .bar-fill {
+                        height: 100%;
+                        background: v.$primary;
+                        border-radius: 10px;
+                    }
+                }
+            }
+        }
+    }
+
+    .journey-box {
+        background: v.$primary;
+        height: fit-content;
+        max-height: fit-content;
+        max-width: fit-content;
+        color: white;
+        padding: 60px;
+        border-radius: 30px;
+        text-align: center;
+        .journey-content{
+            max-height: fit-content;
+            max-width: fit-content;
+        }
+        h3 { font-size: 2rem; margin-bottom: 20px; }
+        p { font-size: 1.2rem; max-width: 800px; margin: 0 auto; opacity: 0.9; }
+    }
+}
