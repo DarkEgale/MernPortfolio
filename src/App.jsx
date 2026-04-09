@@ -10,6 +10,7 @@ import { About } from "./Pages/Public/About/About";
 import { Services } from "./Pages/Public/Services/Services";
 import { Contact } from "./Pages/Public/Contact/Contact";
 import { Projects } from "./Pages/Public/Project/Project";
+import { ProjectDetails } from "./Pages/Public/ProjectDetails/ProjectsDetails";
 function App() {
   const navLinks=[
     {name:'Home',path:'/',end:true},
@@ -30,6 +31,7 @@ function App() {
         <Route path="/services" element={<Services />} />
         <Route path='/projects' element={<Projects/>}/>
         <Route path="/admin/update/" element={<UpdateProject />} />
+        <Route path="/projectdetails/:id" element={<ProjectDetails/>}/>
         <Route path="/contact" element={<Contact/>}/>
         <Route path="/login" element={<Login />} />
       </Routes>

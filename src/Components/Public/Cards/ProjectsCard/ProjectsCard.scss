@@ -18,6 +18,7 @@
     }
     .card-bottom{
         @include g.flex(center,center,column);
+        gap: 20px;
         .techStack{
             @include g.flex(center,center,row);
             gap: 20px;

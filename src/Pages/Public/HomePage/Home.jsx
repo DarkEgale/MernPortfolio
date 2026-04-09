@@ -1,11 +1,13 @@
 import { ProjectCard } from "../../../Components/Public/Cards/ProjectsCard/ProjectsCard";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Home.scss";
 import shimul from "../../../assets/shimul.png";
 import { motion } from "framer-motion";
 
 export const Home = () => {
   const [projects, setProjects] = useState([]);
+  const navigate=useNavigate()
   useEffect(() => {
     const fetchProjects = async () => {
       const res = await fetch("http://localhost:5000/api/public/projects", {
@@ -42,8 +44,8 @@ export const Home = () => {
               web applications with the MERN stack.
             </p>
             <div className="hero-btns">
-              <button className="btn-primary">View My Work</button>
-              <button className="btn-outline">Download Resume</button>
+              <button className="btn-primary" onClick={()=>navigate('/projects')}>View My Work</button>
+              <button className="btn-outline"><a href="https://drive.google.com/file/d/1CnsJlZg-4VhrdZasqcl6pgv3MJBgkr9p/view?usp=sharing" style={{color:'black'}}>Download Resume</a></button>
             </div>
           </motion.div>
         </div>
@@ -77,7 +79,7 @@ export const Home = () => {
                   <strong>Freelance:</strong> Available
                 </span>
               </div>
-              <button className="btn-primary">Read More</button>
+              <button className="btn-primary"onClick={()=>navigate('/about')}>Read More</button>
             </div>
           </div>
         </motion.div>

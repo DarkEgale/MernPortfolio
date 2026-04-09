@@ -1,6 +1,8 @@
 import "./ProjectsCard.scss";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 export const ProjectCard = ({ title, thumbnail, teckStack, id }) => {
+  const navigate=useNavigate();
   return (
     <>
       <motion.div
@@ -20,7 +22,7 @@ export const ProjectCard = ({ title, thumbnail, teckStack, id }) => {
               <li>{t}</li>
             ))}
           </ul>
-          <button>View Project</button>
+          <button onClick={()=>navigate(`/projectdetails/${id}`)}>View Project</button>
         </div>
       </motion.div>
     </>

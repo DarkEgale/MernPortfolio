@@ -1,0 +1,172 @@
+@use '../../../variables.scss' as v;
+
+.project-details {
+    padding: 80px 0;
+    background: v.$bg-soft;
+    min-height: 100vh;
+
+    .container {
+        width: 90%;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .project-header {
+        text-align: center;
+        margin-bottom: 40px;
+
+        h1 {
+            font-size: 3.5rem;
+            color: v.$text-main;
+            margin-bottom: 15px;
+            font-weight: 800;
+        }
+
+        .tech-stack {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+
+            .tech-badge {
+                background: v.$primary;
+                color: white;
+                padding: 6px 18px;
+                border-radius: 50px;
+                font-size: 0.85rem;
+                font-weight: 600;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            }
+        }
+    }
+
+    .screenshots-container {
+        margin: 40px 0;
+        position: relative;
+
+        .scroll-wrapper {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto; // Enables horizontal scroll
+            padding: 20px 0;
+            scroll-snap-type: x mandatory; // Smooth snapping
+            scrollbar-width: thin; // For Firefox
+            scrollbar-color: v.$primary transparent;
+
+            // Custom Scrollbar for Chrome/Safari
+            &::-webkit-scrollbar {
+                height: 6px;
+            }
+            &::-webkit-scrollbar-thumb {
+                background: v.$primary;
+                border-radius: 10px;
+            }
+
+            .scroll-item {
+                flex: 0 0 70%; // Each image takes 70% of container width
+                scroll-snap-align: center;
+                border-radius: 15px;
+                overflow: hidden;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+                
+                @media (max-width: 768px) {
+                    flex: 0 0 90%; // On mobile, take 90%
+                }
+
+                img {
+                    width: 100%;
+                    height: auto;
+                    display: block;
+                    object-fit: cover;
+                }
+            }
+        }
+    }
+
+    .description-section {
+        background: white;
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        margin-top: 20px;
+
+        h2 {
+            font-size: 1.8rem;
+            color: v.$text-main;
+            margin-bottom: 15px;
+            border-left: 5px solid v.$primary;
+            padding-left: 15px;
+        }
+
+        p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: v.$text-muted; // Assuming $text-muted is your lighter grey/text color
+        }
+    }
+}
+
+
+.screenshots-container {
+        position: relative; // বাটনের জন্য পজিশন রিলেটিভ
+        margin: 40px 0;
+        display: flex;
+        align-items: center;
+
+        .nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 10;
+            background: rgba(v.$primary, 0.8);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+
+            &:hover {
+                background: v.$primary;
+                scale: 1.1;
+            }
+
+            &.left { left: -25px; }
+            &.right { right: -25px; }
+
+            @media (max-width: 768px) {
+                width: 40px;
+                height: 40px;
+                &.left { left: 0px; }
+                &.right { right: 0px; }
+            }
+        }
+
+        .scroll-wrapper {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            scrollbar-width: none; 
+            padding: 10px 0;
+
+            &::-webkit-scrollbar {
+                display: none;
+            }
+
+            .scroll-item {
+                flex: 0 0 80%;
+                border-radius: 15px;
+                overflow: hidden;
+                img {
+                    width: 100%;
+                    display: block;
+                }
+            }
+        }
+    }
