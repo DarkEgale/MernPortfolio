@@ -16,13 +16,9 @@ app.use(express.json())
 app.use(morgan('dev'))
 app.use(cookieParser())
 app.use(cors({
-
-    origin: 'https://www.mdshimulhossen.top', 
-
+    origin: ['https://www.mdshimulhossen.top', 'https://mdshimulhossen.top'], 
     credentials: true, 
-
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
-
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
 const apiLimiter = rateLimit({
