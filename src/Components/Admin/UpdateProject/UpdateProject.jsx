@@ -14,7 +14,7 @@ export const UpdateProject = ({ projectId, onUpdateSuccess }) => {
 
         const fetchProject = async () => {
             try {
-                const response = await fetch(`http://localhost:5000/api/public/projects/${projectId}`);
+                const response = await fetch(`https://mernportfolio-7x6r.onrender.com/api/public/projects/${projectId}`);
                 const data = await response.json();
                 if (response.ok) {
                     setTitle(data.title || '');
@@ -50,7 +50,7 @@ export const UpdateProject = ({ projectId, onUpdateSuccess }) => {
         }
 
         try {
-            const response = await fetch(`http://localhost:5000/api/admin/update/${projectId}`, {
+            const response = await fetch(`https://mernportfolio-7x6r.onrender.com/api/admin/update/${projectId}`, {
                 method: 'PATCH',
                 body: formData,
                 credentials: 'include', 

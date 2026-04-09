@@ -6,7 +6,7 @@ export const Projects = () => {
   const [projects, setProjects] = useState([]);
   useEffect(() => {
     const fetchProjects = async () => {
-      const res = await fetch("http://localhost:5000/api/public/projects", {
+      const res = await fetch("https://mernportfolio-7x6r.onrender.com/api/public/projects", {
         method: "GET",
       });
       if (!res.ok) {

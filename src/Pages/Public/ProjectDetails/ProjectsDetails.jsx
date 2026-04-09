@@ -14,7 +14,7 @@ export const ProjectDetails = () => {
         const fetchProject = async () => {
             try {
                 setLoading(true);
-                const res = await fetch(`http://localhost:5000/api/public/projects/${id}`);
+                const res = await fetch(`https://mernportfolio-7x6r.onrender.com/api/public/projects/${id}`);
                 const data = await res.json();
                 
                 if (res.ok) {

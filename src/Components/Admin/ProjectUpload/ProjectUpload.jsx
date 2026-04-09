@@ -31,7 +31,7 @@ export const UploadProject = () => {
         }
 
         try {
-            const response = await fetch('http://localhost:5000/api/admin/create', {
+            const response = await fetch('https://mernportfolio-7x6r.onrender.com/api/admin/create', {
                 method: 'POST',
                 body: formData,
                 credentials: 'include', 

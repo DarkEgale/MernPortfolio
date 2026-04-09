@@ -18,7 +18,7 @@ export const Dashboard = () => {
 
   const fetchProjects = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/public/projects");
+      const response = await fetch("https://mernportfolio-7x6r.onrender.com/api/public/projects");
       const data = await response.json();
       if (response.ok) {
         if (data.projects && Array.isArray(data.projects)) {
