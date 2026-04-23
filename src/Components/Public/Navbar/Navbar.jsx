@@ -1,25 +1,29 @@
 import { NavLink } from "react-router-dom";
-import { Menu } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { useState } from "react";
 import './Navbar.scss';
+
 export const Navbar = ({ navLinks }) => {
-  const[toogle,setToogle]=useState(false)
+  const [toogle, setToogle] = useState(false);
+
   return (
-    <header>
-      <nav>
+    <header className="main-header">
+      {toogle && <div className="menu-overlay" onClick={() => setToogle(false)}></div>}
+      
+      <nav className="navbar-container">
         <div className="nav-left">
-          <h1>MD SHIMUL</h1>
+          <h2 className="logo">Crack<span>Moods</span></h2>
         </div>
+
         <div className="navLinks">
-          <ul className={toogle?'mobile-active':''}>
+          <ul className={toogle ? 'mobile-active' : ''}>
             {navLinks.map((link) => (
-              <li>
+              <li key={link.path}>
                 <NavLink
-                  key={link.path}
                   to={link.path}
                   end={link.end}
                   className={({ isActive }) => (isActive ? "active" : "")}
-                  onClick={()=>setToogle(!toogle)}
+                  onClick={() => setToogle(false)}
                 >
                   {link.name}
                 </NavLink>
@@ -27,10 +31,11 @@ export const Navbar = ({ navLinks }) => {
             ))}
           </ul>
         </div>
+
         <div className="nav-right">
-            <label htmlFor="" onClick={()=>setToogle(!toogle)}>
-                <Menu size={20} style={{color:'black'}}/>
-            </label>
+          <div className="menu-trigger" onClick={() => setToogle(!toogle)}>
+            {toogle ? <X size={24} /> : <Menu size={24} />}
+          </div>
         </div>
       </nav>
     </header>
