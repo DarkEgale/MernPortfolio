@@ -112,7 +112,7 @@ export const UploadProject = () => {
           <label htmlFor="">Live</label>
           <input
             type="text"
-            placeholder="Title"
+            placeholder="Live Link"
             value={live}
             onChange={(e) => setTitle(e.target.value)}
             required
@@ -123,7 +123,7 @@ export const UploadProject = () => {
           <label htmlFor="">GitRepo:</label>
           <input
             type="text"
-            placeholder="Title"
+            placeholder="Git Repository"
             value={gitrepo}
             onChange={(e) => setTitle(e.target.value)}
             required
