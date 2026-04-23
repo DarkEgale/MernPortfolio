@@ -84,7 +84,10 @@ export const ProjectDetails = () => {
                         </button>
                     </div>
                 )}
-
+                <div className="liveButtons">
+                    <button onClick={()=>window.open(project.live)}>Live</button>
+                    <button onClick={()=>window.open(project.gitrepo)}>GitRepository</button>
+                </div>
                 <section className="description-section">
                     <h2>Project Overview</h2>
                     <p>{project.description}</p>

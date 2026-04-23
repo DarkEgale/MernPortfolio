@@ -4,6 +4,8 @@ import './UpdateProject.scss';
 export const UpdateProject = ({ projectId, onUpdateSuccess }) => {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
+    const [live,setLive]=useState('');
+    const [gitrepo,setGitRepo]=useState('')
     const [techStack, setTechStack] = useState('');
     const [thumbnail, setThumbnail] = useState(null);
     const [screenShots, setScreenShots] = useState([]);
@@ -20,6 +22,8 @@ export const UpdateProject = ({ projectId, onUpdateSuccess }) => {
                     setTitle(data.title || '');
                     setDescription(data.description || '');
                     setTechStack(data.techStack ? data.techStack.join(', ') : '');
+                    setLive(data.live);
+                    setGitRepo(data.gitrepo)
                 }
             } catch (error) {
                 console.error("Fetch Error:", error);
@@ -35,6 +39,8 @@ export const UpdateProject = ({ projectId, onUpdateSuccess }) => {
         const formData = new FormData();
         formData.append('title', title);
         formData.append('description', description);
+        formData.append('live',live);
+        formData.append('gitrepo',gitrepo)
         
         const techArray = techStack.split(',').map(item => item.trim()).filter(item => item !== "");
         formData.append('techStack', JSON.stringify(techArray)); 
@@ -108,7 +114,25 @@ export const UpdateProject = ({ projectId, onUpdateSuccess }) => {
                     />
                     <small style={{color: '#64748b', fontSize: '0.8rem'}}>Separate tags with commas (,)</small>
                 </div>
-
+                <div className="input-group">
+                    <label>Live</label>
+                    <input 
+                        type="text" 
+                        placeholder="Title" 
+                        value={live} 
+                        onChange={(e) => setLive(e.target.value)} 
+                        required 
+                    />
+                </div><div className="input-group">
+                    <label>GitRepo</label>
+                    <input 
+                        type="text" 
+                        placeholder="Title" 
+                        value={gitrepo} 
+                        onChange={(e) => setGitRepo(e.target.value)} 
+                        required 
+                    />
+                </div>
                 <div className="input-group">
                     <label>Thumbnail (Optional)</label>
                     <input 

@@ -16,7 +16,13 @@ const projectSchema=new mongoose.Schema({
     screenShots:
     [
         {type:String}
-    ]
+    ],
+    live:{
+        type:String
+    },
+    gitrepo:{
+        type:String
+    }
     
 },{timestamps:true})
 
