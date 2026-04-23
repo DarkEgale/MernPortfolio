@@ -1,0 +1,9 @@
+### Admin Registration Test
+POST http://localhost:5000/api/admin/register
+Content-Type: application/json
+
+{
+    "name": "Shimul",
+    "email": "mdskshimulhossen@gmail.com",
+    "password": "shimul@3536"
+}

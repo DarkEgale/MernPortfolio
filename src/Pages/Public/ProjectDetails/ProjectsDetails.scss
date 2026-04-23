@@ -170,3 +170,12 @@
             }
         }
     }
+
+.liveButtons{
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    button{
+        padding: 10px;
+    }
+}
