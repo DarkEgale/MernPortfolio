@@ -12,7 +12,7 @@ export const Navbar = ({ navLinks }) => {
       
       <nav className="navbar-container">
         <div className="nav-left">
-          <h2 className="logo">Crack<span>Moods</span></h2>
+          <h2 className="logo">MD<span>SHIMUL</span></h2>
         </div>
 
         <div className="navLinks">
