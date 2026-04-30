@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'
 import './Login.scss';
 import API_HOST from '../../../config/api'
 
@@ -6,6 +7,7 @@ export const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate()
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -24,8 +26,10 @@ export const Login = () => {
             const data = await response.json();
 
             if (response.ok) {
-                alert("Login Successful!");
-                console.log("Admin Data:", data.admin);
+                    // mark authenticated on client (frontend-only guard)
+                    try { localStorage.setItem('adminAuth', 'true') } catch (err) {}
+                    // navigate immediately to dashboard
+                    navigate('/admin')
             } else {
                 alert(data.message || "Invalid Credentials");
             }

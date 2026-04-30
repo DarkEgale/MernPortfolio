@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Sidebar from '../../../Components/Admin/Sidebar/Sidebar'
 import BlogForm from '../../../Components/Admin/BlogForm/BlogForm'
 import './Blogs.scss'
-import { Pencil, Trash2 } from 'lucide-react'
+import { Pencil, Trash2, Menu, X } from 'lucide-react'
 import API_HOST from '../../../config/api'
 
 export const Blogs = () => {
@@ -10,6 +10,7 @@ export const Blogs = () => {
   const [loading, setLoading] = useState(true)
   const [showEditor, setShowEditor] = useState(false)
   const [selectedBlog, setSelectedBlog] = useState(null)
+  const [sidebarOpen, setSidebarOpen] = useState(false)
 
   useEffect(() => { fetchBlogs() }, [])
 
@@ -39,7 +40,6 @@ export const Blogs = () => {
       const res = await fetch(`${API_HOST}/api/admin/blog/delete/${id}`, { method: 'DELETE', credentials: 'include' })
       const data = await res.json()
       if (!res.ok) throw new Error(data.message || 'Delete failed')
-      // refresh list
       fetchBlogs()
     } catch (err) {
       console.error(err)
@@ -55,12 +55,17 @@ export const Blogs = () => {
 
   return (
     <div className="dashboard-root">
-      <Sidebar />
+      <Sidebar open={sidebarOpen} />
+      {sidebarOpen && <div className="sidebar-backdrop" onClick={() => setSidebarOpen(false)} />}
       <div className="dashboard-container">
-        <div className="admin-blogs"
-          style={{ padding: '20px',display: 'flex', flexDirection: 'column', gap: '20px',justifyContent: 'center', alignItems: 'flex-start' }}>
+        <div className="admin-blogs">
           <header className="admin-blogs-header">
-            <h2>Blogs</h2>
+            <div className="header-left">
+              <button className="menu-toggle" onClick={() => setSidebarOpen((s) => !s)} aria-label="Toggle sidebar">
+                {sidebarOpen ? <X size={18} /> : <Menu size={18} />}
+              </button>
+              <h2>Blogs</h2>
+            </div>
             <p>Total: {blogs.length}</p>
           </header>
 

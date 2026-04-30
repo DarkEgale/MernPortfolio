@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom'
 import { Pencil, Trash2, Plus, X, Menu } from "lucide-react";
 import { UpdateProject } from "../../../Components/Admin/UpdateProject/UpdateProject";
 import { UploadProject } from "../../../Components/Admin/ProjectUpload/ProjectUpload";
@@ -8,6 +9,13 @@ import "./Dashboard.scss";
 import API_HOST from '../../../config/api'
 
 export const Dashboard = () => {
+  const navigate = useNavigate()
+  useEffect(()=>{
+    try{
+      const ok = localStorage.getItem('adminAuth') === 'true'
+      if(!ok) navigate('/admin/login')
+    }catch(e){ /* ignore */ }
+  },[])
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   

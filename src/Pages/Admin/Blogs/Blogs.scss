@@ -8,6 +8,10 @@
   align-items: center;
   margin-bottom: 20px;
 }
+
+.admin-blogs-header .header-left{display:flex;align-items:center;gap:12px}
+.menu-toggle{display:none;background:transparent;border:0;padding:6px;border-radius:8px;cursor:pointer}
+
 .blogs-table table {
   width: 100%;
   border-collapse: collapse;
@@ -34,10 +38,15 @@
   .admin-blogs {
     padding: 16px;
   }
+  .menu-toggle{display:inline-flex}
   .blogs-table th:nth-child(2),
   .blogs-table td:nth-child(2) {
     display: none;
   }
+}
+
+.sidebar-backdrop{
+  position:fixed;inset:0;background:rgba(0,0,0,0.35);z-index:30
 }
 .dashboard-container {
   background: var(--bg, #f9fafb);
