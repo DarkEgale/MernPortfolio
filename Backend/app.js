@@ -37,6 +37,39 @@ app.use('/api/',apiLimiter)
 app.use('/api/public',publicRoute)
 app.use('/api/admin',adminRouter)
 
+// expose a lightweight routes listing for debugging deployments
+function listRegisteredRoutes() {
+    const routes = []
+    const stack = app._router && app._router.stack ? app._router.stack : []
+    stack.forEach((layer) => {
+        if (layer.route && layer.route.path) {
+            const methods = Object.keys(layer.route.methods).map(m => m.toUpperCase())
+            routes.push({ path: layer.route.path, methods })
+        } else if (layer.name === 'router' && layer.handle && layer.handle.stack) {
+            layer.handle.stack.forEach((handler) => {
+                if (handler.route && handler.route.path) {
+                    const methods = Object.keys(handler.route.methods).map(m => m.toUpperCase())
+                    routes.push({ path: handler.route.path, methods })
+                }
+            })
+        }
+    })
+    return routes
+}
+
+app.get('/routes', (req, res) => {
+    try {
+        const routes = listRegisteredRoutes()
+        res.json({ success: true, routes })
+    } catch (err) {
+        res.status(500).json({ success: false, message: 'Failed to enumerate routes' })
+    }
+})
+
+// log routes on startup for deploy troubleshooting
+const _routes = listRegisteredRoutes()
+console.log('[ROUTES]', JSON.stringify(_routes, null, 2))
+
 
 
 

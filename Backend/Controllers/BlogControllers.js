@@ -1,4 +1,4 @@
-import Blog from "../Schema/BlogSchema";
+import Blog from "../Schema/BlogSchema.js";
 import { uploadToCloudinary } from "../Middleware/uploadCloudinary.js";
 
 export const createBlog = async (req, res) => {
