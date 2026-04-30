@@ -11,10 +11,13 @@ import { Services } from "./Pages/Public/Services/Services";
 import { Contact } from "./Pages/Public/Contact/Contact";
 import { Projects } from "./Pages/Public/Project/Project";
 import { ProjectDetails } from "./Pages/Public/ProjectDetails/ProjectsDetails";
+import Blog from "./Pages/Public/Blog/Blog";
+import BlogDetails from "./Pages/Public/Blog/BlogDetails";
 function App() {
   const navLinks=[
     {name:'Home',path:'/',end:true},
     {name:'About me',path:'/about'},
+    {name:'Blog',path:'/blog'},
     {name:'Services',path:'/services'},
     {name:'Projects',path:'/projects'},
     {name:'Contact',path:'/Contact'}
@@ -30,6 +33,8 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/services" element={<Services />} />
         <Route path='/projects' element={<Projects/>}/>
+        <Route path="/blog" element={<Blog />} />
+        <Route path="/blog/:id" element={<BlogDetails />} />
         <Route path="/admin/update/" element={<UpdateProject />} />
         <Route path="/projectdetails/:id" element={<ProjectDetails/>}/>
         <Route path="/contact" element={<Contact/>}/>

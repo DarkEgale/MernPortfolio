@@ -1,14 +1,33 @@
 @use '../../../variables.scss' as v;
 @use '../../../global.scss' as g;
 
+.dashboard-root{
+    display:flex;
+    min-height:100vh;
+    width:100%;
+    align-items: flex-start; /* ensure sidebar and content align to top */
+}
+
 .dashboard-container {
     padding: 40px;
     background-color: v.$bg-soft;
     min-height: 100vh;
+    flex: 1 1 auto; /* take remaining space beside sidebar */
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start; /* keep content starting from top */
 
     .dashboard-header {
         @include g.flex(space-between, center);
         margin-bottom: 30px;
+
+                .header-left{display:flex;align-items:center;gap:12px}
+
+                .menu-toggle{display:none;background:transparent;border:0;padding:6px;border-radius:8px;cursor:pointer}
+                @media (max-width:900px){
+                    .menu-toggle{display:inline-flex}
+                }
 
         h1 {
             color: v.$text-main;
@@ -32,6 +51,10 @@
         border-radius: v.$radius-lg;
         box-shadow: v.$shadow-xl;
         overflow: hidden;
+        display: flex;
+        align-items: flex-start;
+        /* offset from top to align table start at ~50px from container top */
+        margin-top: 50px;
 
         .project-table {
             width: 100%;
@@ -110,6 +133,12 @@
             }
         }
     }
+}
+
+/* when sidebar is visible on small screens, allow pushing content or overlay */
+@media (max-width:900px){
+    .dashboard-root{position:relative}
+    .dashboard-container{padding:20px}
 }
 
 

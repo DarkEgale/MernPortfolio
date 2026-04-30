@@ -118,7 +118,7 @@ export const UpdateProject = ({ projectId, onUpdateSuccess }) => {
                     <label>Live</label>
                     <input 
                         type="text" 
-                        placeholder="Title" 
+                        placeholder="Live Link" 
                         value={live} 
                         onChange={(e) => setLive(e.target.value)} 
                         required 
@@ -127,7 +127,7 @@ export const UpdateProject = ({ projectId, onUpdateSuccess }) => {
                     <label>GitRepo</label>
                     <input 
                         type="text" 
-                        placeholder="Title" 
+                        placeholder="Git Repository" 
                         value={gitrepo} 
                         onChange={(e) => setGitRepo(e.target.value)} 
                         required 

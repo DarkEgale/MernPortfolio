@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Pencil, Trash2, Plus, X } from "lucide-react";
+import { Pencil, Trash2, Plus, X, Menu } from "lucide-react";
 import { UpdateProject } from "../../../Components/Admin/UpdateProject/UpdateProject";
 import { UploadProject } from "../../../Components/Admin/ProjectUpload/ProjectUpload";
+import Sidebar from '../../../Components/Admin/Sidebar/Sidebar'
 import "./Dashboard.scss";
 
 export const Dashboard = () => {
@@ -11,6 +12,7 @@ export const Dashboard = () => {
   const [selectedProjectId, setSelectedProjectId] = useState(null);
   const [showUpdateForm, setShowUpdateForm] = useState(false);
   const [showCreateForm, setShowCreateForm] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
     fetchProjects();
@@ -48,7 +50,9 @@ export const Dashboard = () => {
   };
 
   return (
-    <div className="dashboard-container">
+    <div className="dashboard-root">
+      <Sidebar open={sidebarOpen} />
+      <div className={`dashboard-container ${sidebarOpen ? 'with-sidebar' : ''}`}>
       {/* Create Project Modal */}
       {showCreateForm && (
         <div className="modal-overlay">
@@ -81,9 +85,14 @@ export const Dashboard = () => {
       {!showCreateForm && !showUpdateForm && (
         <>
           <header className="dashboard-header">
-            <div>
-              <h1>Project Management</h1>
-              <p>Total: {projects?.length || 0}</p>
+            <div className="header-left">
+              <button className="menu-toggle" onClick={() => setSidebarOpen((s) => !s)} aria-label="Toggle sidebar">
+                <Menu size={18} />
+              </button>
+              <div>
+                <h1>Project Management</h1>
+                <p>Total: {projects?.length || 0}</p>
+              </div>
             </div>
             <button className="add-btn" onClick={() => setShowCreateForm(true)}>
               <Plus size={20} /> Add New Project
@@ -127,6 +136,7 @@ export const Dashboard = () => {
           </section>
         </>
       )}
+      </div>
     </div>
   );
 };
