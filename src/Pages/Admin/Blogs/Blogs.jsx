@@ -8,7 +8,7 @@ export const Blogs = () => {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    fetch('/api/public/blogs')
+    fetch('https://mernportfolio-7x6r.onrender.com/api/public/blogs')
       .then((res) => res.json())
       .then((data) => {
         if (data && data.blogs) setBlogs(data.blogs)

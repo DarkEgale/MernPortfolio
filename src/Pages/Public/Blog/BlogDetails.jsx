@@ -10,7 +10,7 @@ const BlogDetails = () => {
 
   useEffect(() => {
     let mounted = true
-    const API_BASE = import.meta.env.VITE_API_BASE || '/api'
+    const API_BASE = 'https://mernportfolio-7x6r.onrender.com'
     const fetchPost = async () => {
       try {
         const res = await fetch(`${API_BASE}/public/blogs/${id}`)
