@@ -57,7 +57,8 @@ export const Blogs = () => {
     <div className="dashboard-root">
       <Sidebar />
       <div className="dashboard-container">
-        <div className="admin-blogs">
+        <div className="admin-blogs"
+          style={{ padding: '20px',display: 'flex', flexDirection: 'column', gap: '20px',justifyContent: 'center', alignItems: 'flex-start' }}>
           <header className="admin-blogs-header">
             <h2>Blogs</h2>
             <p>Total: {blogs.length}</p>

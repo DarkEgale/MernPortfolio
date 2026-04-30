@@ -17,7 +17,10 @@
     flex-direction: column;
     align-items: stretch;
     justify-content: flex-start; /* keep content starting from top */
-    margin-top: 100px;
+     /* Leave ~100px total offset from navbar to table start.
+         We set container top to 68px and keep inner padding (32px),
+         so 68 + 32 = 100px before table; table-section margin removed. */
+     margin-top: 68px;
     .dashboard-header {
         @include g.flex(space-between, center);
         margin-bottom: 30px;
@@ -56,8 +59,8 @@
         overflow: hidden;
         display: block;
         align-items: flex-start;
-        /* offset from top to align table start at ~50px from container top */
-        margin-top: 50px;
+        /* no extra offset here — container + inner padding create the ~100px gap */
+        margin-top: 0;
 
         .project-table {
             width: 100%;
