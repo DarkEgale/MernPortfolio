@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './BlogForm.scss'
 import API_HOST from '../../../config/api'
 
-const BlogForm = ({ onSuccess, onCancel }) => {
+const BlogForm = ({ onSuccess, onCancel, initialData = null, blogId = null }) => {
   const [title, setTitle] = useState('')
   const [subtitle, setSubtitle] = useState('')
   const [content, setContent] = useState('')
@@ -10,11 +10,20 @@ const BlogForm = ({ onSuccess, onCancel }) => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
 
+  useEffect(() => {
+    if (initialData) {
+      setTitle(initialData.title || '')
+      setSubtitle(initialData.subtitle || initialData.excerpt || '')
+      setContent(initialData.content || '')
+      // image left null so user can upload new one; show preview outside if needed
+    }
+  }, [initialData])
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     setError(null)
-    if (!title || !subtitle || !content || !image) {
-      setError('All fields are required')
+    if (!title || !subtitle || !content) {
+      setError('Title, subtitle and content are required')
       return
     }
     setLoading(true)
@@ -23,26 +32,27 @@ const BlogForm = ({ onSuccess, onCancel }) => {
       form.append('title', title)
       form.append('subtitle', subtitle)
       form.append('content', content)
-      form.append('image', image)
+      if (image) form.append('image', image)
 
-      const res = await fetch(`${API_HOST}/api/admin/blog/create`, {
-        method: 'POST',
+      const url = blogId ? `${API_HOST}/api/admin/blog/update/${blogId}` : `${API_HOST}/api/admin/blog/create`
+      const method = blogId ? 'PATCH' : 'POST'
+
+      const res = await fetch(url, {
+        method,
         body: form,
         credentials: 'include'
       })
-        let data = null
-        const ct = res.headers.get('content-type') || ''
-        if (ct.includes('application/json')) {
-          data = await res.json()
-        } else {
-          const text = await res.text()
-          try {
-            data = text ? JSON.parse(text) : null
-          } catch (err) {
-            data = { message: text }
-          }
-        }
-        if (!res.ok) throw new Error((data && (data.message || data.error)) || `Request failed (${res.status})`)
+
+      let data = null
+      const ct = res.headers.get('content-type') || ''
+      if (ct.includes('application/json')) {
+        data = await res.json()
+      } else {
+        const text = await res.text()
+        try { data = text ? JSON.parse(text) : null } catch (err) { data = { message: text } }
+      }
+
+      if (!res.ok) throw new Error((data && (data.message || data.error)) || `Request failed (${res.status})`)
       if (onSuccess) onSuccess(data)
     } catch (e) {
       setError(e.message)
@@ -70,13 +80,13 @@ const BlogForm = ({ onSuccess, onCancel }) => {
       </label>
 
       <label className="file-input">
-        Cover image
+        Cover image {blogId ? '(leave empty to keep existing)' : ''}
         <input type="file" accept="image/*" onChange={(e) => setImage(e.target.files[0])} />
       </label>
 
       <div className="form-actions">
         <button type="button" className="btn btn-muted" onClick={onCancel}>Cancel</button>
-        <button type="submit" className="btn btn-primary" disabled={loading}>{loading ? 'Saving...' : 'Create Blog'}</button>
+        <button type="submit" className="btn btn-primary" disabled={loading}>{loading ? 'Saving...' : (blogId ? 'Update Blog' : 'Create Blog')}</button>
       </div>
     </form>
   )

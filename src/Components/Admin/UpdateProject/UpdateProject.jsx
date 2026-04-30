@@ -19,12 +19,13 @@ export const UpdateProject = ({ projectId, onUpdateSuccess }) => {
             try {
                 const response = await fetch(`${API_HOST}/api/public/projects/${projectId}`);
                 const data = await response.json();
-                if (response.ok) {
-                    setTitle(data.title || '');
-                    setDescription(data.description || '');
-                    setTechStack(data.techStack ? data.techStack.join(', ') : '');
-                    setLive(data.live);
-                    setGitRepo(data.gitrepo)
+                const projectData = data.project || data
+                if (projectData) {
+                    setTitle(projectData.title || '');
+                    setDescription(projectData.description || '');
+                    setTechStack(projectData.techStack ? projectData.techStack.join(', ') : '');
+                    setLive(projectData.live || '');
+                    setGitRepo(projectData.gitrepo || '')
                 }
             } catch (error) {
                 console.error("Fetch Error:", error);
