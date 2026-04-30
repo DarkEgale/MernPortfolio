@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './Blog.scss'
 import BlogCard from '../../../Components/Public/Cards/BlogCard/BlogCard'
+import API_HOST from '../../../config/api'
 
 const Blog = () => {
   const [posts, setPosts] = useState([])
@@ -9,10 +10,9 @@ const Blog = () => {
 
   useEffect(() => {
     let mounted = true
-    const API_BASE = 'https://mernportfolio-7x6r.onrender.com'
     const fetchPosts = async () => {
       try {
-        const res = await fetch(`${API_BASE}/public/blogs`)
+        const res = await fetch(`${API_HOST}/api/public/blogs`)
         if (!res.ok) throw new Error('Failed to load posts')
         const data = await res.json()
         // backend returns { success: true, blogs }

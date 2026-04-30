@@ -5,6 +5,7 @@ import { UploadProject } from "../../../Components/Admin/ProjectUpload/ProjectUp
 import Sidebar from '../../../Components/Admin/Sidebar/Sidebar'
 import BlogForm from '../../../Components/Admin/BlogForm/BlogForm'
 import "./Dashboard.scss";
+import API_HOST from '../../../config/api'
 
 export const Dashboard = () => {
   const [projects, setProjects] = useState([]);
@@ -22,7 +23,7 @@ export const Dashboard = () => {
 
   const fetchProjects = async () => {
     try {
-      const response = await fetch("https://mernportfolio-7x6r.onrender.com/api/public/projects");
+      const response = await fetch(`${API_HOST}/api/public/projects`);
       const data = await response.json();
       if (response.ok) {
         if (data.projects && Array.isArray(data.projects)) {

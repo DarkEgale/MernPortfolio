@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import { ProjectCard } from "../../../Components/Public/Cards/ProjectsCard/ProjectsCard";
 import "./Project.scss";
+import API_HOST from '../../../config/api'
 
 export const Projects = () => {
   const [projects, setProjects] = useState([]);
   useEffect(() => {
     const fetchProjects = async () => {
-      const res = await fetch("https://mernportfolio-7x6r.onrender.com/api/public/projects", {
+      const res = await fetch(`${API_HOST}/api/public/projects`, {
         method: "GET",
       });
       if (!res.ok) {

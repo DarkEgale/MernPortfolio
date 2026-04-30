@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import './BlogDetails.scss'
+import API_HOST from '../../../config/api'
 
 const BlogDetails = () => {
   const { id } = useParams()
@@ -10,10 +11,9 @@ const BlogDetails = () => {
 
   useEffect(() => {
     let mounted = true
-    const API_BASE = 'https://mernportfolio-7x6r.onrender.com'
     const fetchPost = async () => {
       try {
-        const res = await fetch(`${API_BASE}/public/blogs/${id}`)
+        const res = await fetch(`${API_HOST}/api/public/blogs/${id}`)
         if (!res.ok) throw new Error('Failed to load post')
         const data = await res.json()
         // backend returns { success: true, blog }

@@ -1,9 +1,5 @@
-### Admin Registration Test
-POST http://localhost:5000/api/admin/register
-Content-Type: application/json
+### Dev: list deployed server routes
+GET https://mernportfolio-7x6r.onrender.com/routes
 
-{
-    "name": "Shimul",
-    "email": "mdskshimulhossen@gmail.com",
-    "password": "shimul@3536"
-}
+### Dev: public blogs
+GET https://mernportfolio-7x6r.onrender.com/api/public/blogs

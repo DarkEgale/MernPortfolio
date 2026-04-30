@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./ProjectUpload.scss";
+import API_HOST from '../../../config/api'
 
 export const UploadProject = () => {
   const [title, setTitle] = useState("");
@@ -39,7 +40,7 @@ export const UploadProject = () => {
 
     try {
       const response = await fetch(
-        "https://mernportfolio-7x6r.onrender.com/api/admin/create",
+        `${API_HOST}/api/admin/create`,
         {
           method: "POST",
           body: formData,

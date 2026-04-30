@@ -4,13 +4,14 @@ import { useNavigate } from "react-router-dom";
 import "./Home.scss";
 import shimul from "../../../assets/shimul.png";
 import { motion } from "framer-motion";
+import API_HOST from '../../../config/api'
 
 export const Home = () => {
   const [projects, setProjects] = useState([]);
   const navigate=useNavigate()
   useEffect(() => {
     const fetchProjects = async () => {
-      const res = await fetch("https://mernportfolio-7x6r.onrender.com/api/public/projects", {
+      const res = await fetch(`${API_HOST}/api/public/projects`, {
         method: "GET",
       });
       if (!res.ok) {

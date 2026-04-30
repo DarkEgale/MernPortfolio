@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './Login.scss';
+import API_HOST from '../../../config/api'
 
 export const Login = () => {
     const [email, setEmail] = useState('');
@@ -11,7 +12,7 @@ export const Login = () => {
         setLoading(true);
 
         try {
-            const response = await fetch('https://mernportfolio-7x6r.onrender.com/api/admin/login', {
+            const response = await fetch(`${API_HOST}/api/admin/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

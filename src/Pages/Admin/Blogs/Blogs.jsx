@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react'
 import Sidebar from '../../../Components/Admin/Sidebar/Sidebar'
 import './Blogs.scss'
 import { Pencil, Trash2 } from 'lucide-react'
+import API_HOST from '../../../config/api'
 
 export const Blogs = () => {
   const [blogs, setBlogs] = useState([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    fetch('https://mernportfolio-7x6r.onrender.com/api/public/blogs')
+    fetch(`${API_HOST}/api/public/blogs`)
       .then((res) => res.json())
       .then((data) => {
         if (data && data.blogs) setBlogs(data.blogs)

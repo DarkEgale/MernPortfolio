@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import './BlogForm.scss'
+import API_HOST from '../../../config/api'
 
 const BlogForm = ({ onSuccess, onCancel }) => {
   const [title, setTitle] = useState('')
@@ -24,8 +25,7 @@ const BlogForm = ({ onSuccess, onCancel }) => {
       form.append('content', content)
       form.append('image', image)
 
-      const API_BASE = 'https://mernportfolio-7x6r.onrender.com';
-      const res = await fetch(`${API_BASE}/api/admin/blog/create`, {
+      const res = await fetch(`${API_HOST}/api/admin/blog/create`, {
         method: 'POST',
         body: form,
         credentials: 'include'

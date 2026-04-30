@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import "./ProjectsDetails.scss";
+import API_HOST from '../../../config/api'
 
 export const ProjectDetails = () => {
     const { id } = useParams();
@@ -14,7 +15,7 @@ export const ProjectDetails = () => {
         const fetchProject = async () => {
             try {
                 setLoading(true);
-                const res = await fetch(`https://mernportfolio-7x6r.onrender.com/api/public/projects/${id}`);
+                const res = await fetch(`${API_HOST}/api/public/projects/${id}`);
                 const data = await res.json();
                 
                 if (res.ok) {
