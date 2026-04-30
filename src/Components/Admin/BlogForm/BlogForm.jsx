@@ -29,8 +29,19 @@ const BlogForm = ({ onSuccess, onCancel }) => {
         body: form,
         credentials: 'include'
       })
-      const data = await res.json()
-      if (!res.ok) throw new Error(data.message || 'Failed')
+        let data = null
+        const ct = res.headers.get('content-type') || ''
+        if (ct.includes('application/json')) {
+          data = await res.json()
+        } else {
+          const text = await res.text()
+          try {
+            data = text ? JSON.parse(text) : null
+          } catch (err) {
+            data = { message: text }
+          }
+        }
+        if (!res.ok) throw new Error((data && (data.message || data.error)) || `Request failed (${res.status})`)
       if (onSuccess) onSuccess(data)
     } catch (e) {
       setError(e.message)

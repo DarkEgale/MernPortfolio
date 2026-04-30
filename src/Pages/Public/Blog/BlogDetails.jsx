@@ -15,7 +15,8 @@ const BlogDetails = () => {
         const res = await fetch(`/api/public/blogs/${id}`)
         if (!res.ok) throw new Error('Failed to load post')
         const data = await res.json()
-        if (mounted) setPost(data)
+        // backend returns { success: true, blog }
+        if (mounted) setPost(data.blog || data)
       } catch (err) {
         if (mounted) setError(err.message)
       } finally {

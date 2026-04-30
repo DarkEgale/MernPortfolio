@@ -14,7 +14,8 @@ const Blog = () => {
         const res = await fetch('/api/public/blogs')
         if (!res.ok) throw new Error('Failed to load posts')
         const data = await res.json()
-        if (mounted) setPosts(data)
+        // backend returns { success: true, blogs }
+        if (mounted) setPosts(Array.isArray(data) ? data : (data.blogs || []))
       } catch (err) {
         if (mounted) setError(err.message)
       } finally {
