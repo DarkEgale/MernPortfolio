@@ -4,7 +4,7 @@ import './Sidebar.scss'
 import { NavLink } from 'react-router-dom'
 
 const items = [
-  { name: 'Projects', path: '/admin/projects', icon: <FileText size={18} /> },
+  { name: 'Projects', path: '/admin', icon: <FileText size={18} /> },
   { name: 'Blogs', path: '/admin/blogs', icon: <Grid size={18} /> },
 ]
 

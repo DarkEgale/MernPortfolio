@@ -17,7 +17,7 @@
     flex-direction: column;
     align-items: stretch;
     justify-content: flex-start; /* keep content starting from top */
-
+    margin-top: 100px;
     .dashboard-header {
         @include g.flex(space-between, center);
         margin-bottom: 30px;
