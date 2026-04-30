@@ -11,12 +11,12 @@ const BlogCard = ({ post, index = 0 }) => {
       </div>
       <div className="card-body">
         <h3 className="title">{post.title}</h3>
-        <p className="excerpt">{post.excerpt}</p>
+        <p className="excerpt">{post.excerpt || post.subtitle}</p>
         <div className="meta">
-          <span className="date">{post.date}</span>
+          <span className="date">{typeof post.date === 'string' ? post.date : new Date(post.date).toDateString()}</span>
           <Link
             className="read-more"
-            to={`/blog/${post.id}`}
+            to={`/blog/${post._id || post.id}`}
             aria-label={`Read ${post.title}`}
           >
             Read more

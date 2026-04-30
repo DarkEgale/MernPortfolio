@@ -3,6 +3,7 @@ import { Pencil, Trash2, Plus, X, Menu } from "lucide-react";
 import { UpdateProject } from "../../../Components/Admin/UpdateProject/UpdateProject";
 import { UploadProject } from "../../../Components/Admin/ProjectUpload/ProjectUpload";
 import Sidebar from '../../../Components/Admin/Sidebar/Sidebar'
+import BlogForm from '../../../Components/Admin/BlogForm/BlogForm'
 import "./Dashboard.scss";
 
 export const Dashboard = () => {
@@ -13,6 +14,7 @@ export const Dashboard = () => {
   const [showUpdateForm, setShowUpdateForm] = useState(false);
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [showBlogForm, setShowBlogForm] = useState(false);
 
   useEffect(() => {
     fetchProjects();
@@ -81,6 +83,18 @@ export const Dashboard = () => {
         </div>
       )}
 
+      {/* Create Blog Modal */}
+      {showBlogForm && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <button className="close-btn" onClick={() => setShowBlogForm(false)}>
+              <X size={24} />
+            </button>
+            <BlogForm onSuccess={() => setShowBlogForm(false)} onCancel={() => setShowBlogForm(false)} />
+          </div>
+        </div>
+      )}
+
       {/* Main Table View (ফর্ম না দেখালে এটি দেখা যাবে) */}
       {!showCreateForm && !showUpdateForm && (
         <>
@@ -94,9 +108,14 @@ export const Dashboard = () => {
                 <p>Total: {projects?.length || 0}</p>
               </div>
             </div>
-            <button className="add-btn" onClick={() => setShowCreateForm(true)}>
-              <Plus size={20} /> Add New Project
-            </button>
+            <div className="header-actions">
+              <button className="add-btn" onClick={() => setShowCreateForm(true)}>
+                <Plus size={20} /> Add New Project
+              </button>
+              <button className="add-btn secondary" onClick={() => setShowBlogForm(true)}>
+                <Plus size={18} /> Create Blog
+              </button>
+            </div>
           </header>
 
           <section className="table-section">

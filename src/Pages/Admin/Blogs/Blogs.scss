@@ -1,0 +1,11 @@
+.admin-blogs{padding:32px}
+.admin-blogs-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.blogs-table table{width:100%;border-collapse:collapse}
+.blogs-table th,.blogs-table td{padding:12px 14px;border-bottom:1px solid rgba(15,20,30,0.04);text-align:left}
+.actions button{background:none;border:none;padding:6px;border-radius:6px;cursor:pointer}
+.actions button:hover{background:rgba(0,0,0,0.04)}
+
+@media (max-width:720px){
+  .admin-blogs{padding:16px}
+  .blogs-table th:nth-child(2),.blogs-table td:nth-child(2){display:none}
+}

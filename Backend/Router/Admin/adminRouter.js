@@ -8,6 +8,7 @@ import {
 } from "../../Controllers/AdminControllers.js";
 import { Protected } from "../../Middleware/middleware.js";
 import { upload } from "../../Middleware/multer.js";
+import { createBlog, updateBlog, deleteBlog } from "../../Controllers/BlogControllers.js";
 
 const router = express.Router();
 
@@ -39,5 +40,10 @@ router.patch(
 
 
 router.delete('/delete/:id', Protected, deleteProject);
+
+// Blog admin routes
+router.post('/blog/create', Protected, upload.single('image'), createBlog);
+router.patch('/blog/update/:id', Protected, upload.single('image'), updateBlog);
+router.delete('/blog/delete/:id', Protected, deleteBlog);
 
 export default router;
