@@ -24,7 +24,8 @@ const BlogForm = ({ onSuccess, onCancel }) => {
       form.append('content', content)
       form.append('image', image)
 
-      const res = await fetch('/api/admin/blog/create', {
+      const API_BASE = 'https://mernportfolio-7x6r.onrender.com';
+      const res = await fetch(`${API_BASE}/api/admin/blog/create`, {
         method: 'POST',
         body: form,
         credentials: 'include'

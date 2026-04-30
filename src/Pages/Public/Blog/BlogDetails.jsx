@@ -10,9 +10,10 @@ const BlogDetails = () => {
 
   useEffect(() => {
     let mounted = true
+    const API_BASE = import.meta.env.VITE_API_BASE || '/api'
     const fetchPost = async () => {
       try {
-        const res = await fetch(`/api/public/blogs/${id}`)
+        const res = await fetch(`${API_BASE}/public/blogs/${id}`)
         if (!res.ok) throw new Error('Failed to load post')
         const data = await res.json()
         // backend returns { success: true, blog }
