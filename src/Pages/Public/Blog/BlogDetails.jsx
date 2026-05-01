@@ -1,37 +1,39 @@
-import React, { useEffect, useState } from 'react'
-import { useParams, Link } from 'react-router-dom'
-import './BlogDetails.scss'
-import API_HOST from '../../../config/api'
+import React, { useEffect, useState } from "react";
+import { useParams, Link } from "react-router-dom";
+import "./BlogDetails.scss";
+import API_HOST from "../../../config/api";
 
 const BlogDetails = () => {
-  const { id } = useParams()
-  const [post, setPost] = useState(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
+  const { id } = useParams();
+  const [post, setPost] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    let mounted = true
+    let mounted = true;
     const fetchPost = async () => {
       try {
-        const res = await fetch(`${API_HOST}/api/public/blogs/${id}`)
-        if (!res.ok) throw new Error('Failed to load post')
-        const data = await res.json()
+        const res = await fetch(`${API_HOST}/api/public/blogs/${id}`);
+        if (!res.ok) throw new Error("Failed to load post");
+        const data = await res.json();
         // backend returns { success: true, blog }
-        if (mounted) setPost(data.blog || data)
+        if (mounted) setPost(data.blog || data);
       } catch (err) {
-        if (mounted) setError(err.message)
+        if (mounted) setError(err.message);
       } finally {
-        if (mounted) setLoading(false)
+        if (mounted) setLoading(false);
       }
-    }
+    };
 
-    fetchPost()
-    return () => { mounted = false }
-  }, [id])
+    fetchPost();
+    return () => {
+      mounted = false;
+    };
+  }, [id]);
 
-  if (loading) return <p className="container">Loading…</p>
-  if (error) return <p className="container error">{error}</p>
-  if (!post) return <p className="container">Post not found.</p>
+  if (loading) return <p className="container">Loading…</p>;
+  if (error) return <p className="container error">{error}</p>;
+  if (!post) return <p className="container">Post not found.</p>;
 
   return (
     <article className="blog-details">
@@ -40,8 +42,29 @@ const BlogDetails = () => {
           <h1 className="details-title">{post.title}</h1>
           <p className="details-subtitle">{post.excerpt || post.subtitle}</p>
           <div className="details-meta">
-            <span className="date">{post.date}</span>
-            <Link to="/blog" className="back-link">← Back to articles</Link>
+            <span
+              className="date"
+              style={{
+                fontSize: "14px",
+                color: "#9ca3af",
+                fontFamily: "monospace",
+                borderBottom: "1px solid #00d2ff",
+                paddingBottom: "2px",
+              }}
+            >
+              {post.date
+                ? new Date(
+                    post.date.toString().split("T")[0],
+                  ).toLocaleDateString("en-GB", {
+                    day: "numeric",
+                    month: "long",
+                    year: "numeric",
+                  })
+                : "No Date"}
+            </span>
+            <Link to="/blog" className="back-link">
+              ← Back to articles
+            </Link>
           </div>
         </header>
 
@@ -56,7 +79,7 @@ const BlogDetails = () => {
         </section>
       </div>
     </article>
-  )
-}
+  );
+};
 
-export default BlogDetails
+export default BlogDetails;
