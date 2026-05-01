@@ -17,19 +17,22 @@ const BlogCard = ({ post, index = 0 }) => {
             className="date"
             style={{
               fontSize: "14px",
-              color: "#9ca3af", 
+              color: "#9ca3af",
               fontFamily: "monospace",
               borderBottom: "1px solid #00d2ff",
               paddingBottom: "2px",
             }}
           >
-            {typeof post.date === "string"
-              ? post.date
-              : new Date(post.date).toLocaleDateString("en-GB", {
-                  day: "numeric",
-                  month: "long",
-                  year: "numeric",
-                })}
+            {post.date
+              ? new Date(post.date.toString().split("T")[0]).toLocaleDateString(
+                  "en-GB",
+                  {
+                    day: "numeric",
+                    month: "long",
+                    year: "numeric",
+                  },
+                )
+              : "No Date"}
           </span>
           <Link
             className="read-more"
