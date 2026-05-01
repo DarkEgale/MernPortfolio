@@ -2,7 +2,7 @@ import React from 'react'
 import { FileText, Grid, LogOut } from 'lucide-react'
 import './Sidebar.scss'
 import { NavLink } from 'react-router-dom'
-import { useNavigate } from 'react-router-dom'
+import { logoutAdmin } from '../../../utils/adminAuth'
 
 const items = [
   { name: 'Projects', path: '/admin', icon: <FileText size={18} /> },
@@ -10,11 +10,8 @@ const items = [
 ]
 
 export const Sidebar = ({ compact = false, open = false }) => {
-  const navigate = useNavigate()
   const handleLogout = () => {
-    try { localStorage.removeItem('adminAuth') } catch (e) {}
-    // optionally clear cookies by navigating to backend logout if exists
-    navigate('/admin/login')
+    logoutAdmin()
   }
 
   return (

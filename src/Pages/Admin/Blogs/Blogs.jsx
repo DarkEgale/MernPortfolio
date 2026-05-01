@@ -5,6 +5,7 @@ import './Blogs.scss'
 import { Pencil, Trash2, Menu, X } from 'lucide-react'
 import API_HOST from '../../../config/api'
 import { TableSkeleton } from '../../../Components/Common/Skeleton/Skeleton'
+import { adminFetch, verifyAdminSession } from '../../../utils/adminAuth'
 
 export const Blogs = () => {
   const [blogs, setBlogs] = useState([])
@@ -13,7 +14,17 @@ export const Blogs = () => {
   const [selectedBlog, setSelectedBlog] = useState(null)
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
-  useEffect(() => { fetchBlogs() }, [])
+  useEffect(() => {
+    let mounted = true
+    const loadBlogs = async () => {
+      const ok = await verifyAdminSession()
+      if (!mounted || !ok) return
+      fetchBlogs()
+    }
+
+    loadBlogs()
+    return () => { mounted = false }
+  }, [])
 
   const fetchBlogs = async () => {
     setLoading(true)
@@ -38,7 +49,7 @@ export const Blogs = () => {
   const handleDelete = async (id) => {
     if (!confirm('Delete this blog?')) return
     try {
-      const res = await fetch(`${API_HOST}/api/admin/blog/delete/${id}`, { method: 'DELETE', credentials: 'include' })
+      const res = await adminFetch(`${API_HOST}/api/admin/blog/delete/${id}`, { method: 'DELETE' })
       const data = await res.json()
       if (!res.ok) throw new Error(data.message || 'Delete failed')
       fetchBlogs()

@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import "./ProjectUpload.scss";
 import API_HOST from '../../../config/api'
+import { adminFetch } from "../../../utils/adminAuth";
 
-export const UploadProject = () => {
+export const UploadProject = ({ onSuccess }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [techStack, setTechStack] = useState("");
@@ -39,12 +40,11 @@ export const UploadProject = () => {
     }
 
     try {
-      const response = await fetch(
+      const response = await adminFetch(
         `${API_HOST}/api/admin/create`,
         {
           method: "POST",
           body: formData,
-          credentials: "include",
         },
       );
 
@@ -59,6 +59,7 @@ export const UploadProject = () => {
         setTechStack("");
         setThumbnail(null);
         setScreenShots([]);
+        if (onSuccess) onSuccess();
         
       } else {
         alert(result.message || "Upload failed");
@@ -115,7 +116,7 @@ export const UploadProject = () => {
             type="text"
             placeholder="Live Link"
             value={live}
-            onChange={(e) => setTitle(e.target.value)}
+            onChange={(e) => setLive(e.target.value)}
             required
           />
         </div>
@@ -126,7 +127,7 @@ export const UploadProject = () => {
             type="text"
             placeholder="Git Repository"
             value={gitrepo}
-            onChange={(e) => setTitle(e.target.value)}
+            onChange={(e) => setGitRepo(e.target.value)}
             required
           />
         </div>

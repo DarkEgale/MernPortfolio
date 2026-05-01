@@ -29,7 +29,7 @@ export const Protected=async(req,res,next)=>{
         }
         next()
     }catch{
-        res.status(500).json({sucess:false,message:'Invalid Token'})
+        res.status(403).json({sucess:false,message:'Invalid Token'})
     }
 }
 

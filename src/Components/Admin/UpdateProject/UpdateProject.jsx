@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './UpdateProject.scss';
 import API_HOST from '../../../config/api'
+import { adminFetch } from '../../../utils/adminAuth';
 
 export const UpdateProject = ({ projectId, onUpdateSuccess }) => {
     const [title, setTitle] = useState('');
@@ -58,10 +59,9 @@ export const UpdateProject = ({ projectId, onUpdateSuccess }) => {
         }
 
         try {
-            const response = await fetch(`${API_HOST}/api/admin/update/${projectId}`, {
+            const response = await adminFetch(`${API_HOST}/api/admin/update/${projectId}`, {
                 method: 'PATCH',
                 body: formData,
-                credentials: 'include', 
             });
 
             const result = await response.json();

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './BlogForm.scss'
 import API_HOST from '../../../config/api'
+import { adminFetch } from '../../../utils/adminAuth'
 
 const BlogForm = ({ onSuccess, onCancel, initialData = null, blogId = null }) => {
   const [title, setTitle] = useState('')
@@ -37,10 +38,9 @@ const BlogForm = ({ onSuccess, onCancel, initialData = null, blogId = null }) =>
       const url = blogId ? `${API_HOST}/api/admin/blog/update/${blogId}` : `${API_HOST}/api/admin/blog/create`
       const method = blogId ? 'PATCH' : 'POST'
 
-      const res = await fetch(url, {
+      const res = await adminFetch(url, {
         method,
         body: form,
-        credentials: 'include'
       })
 
       let data = null
@@ -49,7 +49,7 @@ const BlogForm = ({ onSuccess, onCancel, initialData = null, blogId = null }) =>
         data = await res.json()
       } else {
         const text = await res.text()
-        try { data = text ? JSON.parse(text) : null } catch (err) { data = { message: text } }
+        try { data = text ? JSON.parse(text) : null } catch { data = { message: text } }
       }
 
       if (!res.ok) throw new Error((data && (data.message || data.error)) || `Request failed (${res.status})`)

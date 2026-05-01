@@ -1,7 +1,9 @@
 import express from 'express';
 import { 
     Login,
+    Logout,
     Register,
+    VerifyAdmin,
     createProjects,
     deleteProject,
     updateProjects
@@ -29,6 +31,8 @@ router.use((req, res, next) => {
 
 router.post('/register', validateAuth, Register);
 router.post('/login', validateAuth, Login);
+router.get('/verify', Protected, VerifyAdmin);
+router.post('/logout', Logout);
 
 
 router.post(

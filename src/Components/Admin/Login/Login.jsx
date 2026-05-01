@@ -27,7 +27,11 @@ export const Login = () => {
 
             if (response.ok) {
                     // mark authenticated on client (frontend-only guard)
-                    try { localStorage.setItem('adminAuth', 'true') } catch (err) {}
+                    try {
+                        localStorage.setItem('adminAuth', 'true')
+                    } catch {
+                        // Login should continue even if localStorage is unavailable.
+                    }
                     // navigate immediately to dashboard
                     navigate('/admin')
             } else {

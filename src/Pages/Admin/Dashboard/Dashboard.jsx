@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from 'react-router-dom'
 import { Pencil, Trash2, Plus, X, Menu } from "lucide-react";
 import { UpdateProject } from "../../../Components/Admin/UpdateProject/UpdateProject";
 import { UploadProject } from "../../../Components/Admin/ProjectUpload/ProjectUpload";
@@ -8,17 +7,23 @@ import BlogForm from '../../../Components/Admin/BlogForm/BlogForm'
 import "./Dashboard.scss";
 import API_HOST from '../../../config/api'
 import { TableSkeleton } from '../../../Components/Common/Skeleton/Skeleton'
+import { verifyAdminSession } from '../../../utils/adminAuth'
 
 export const Dashboard = () => {
-  const navigate = useNavigate()
+  const [authChecked, setAuthChecked] = useState(false);
   useEffect(()=>{
-    try{
-      const ok = localStorage.getItem('adminAuth') === 'true'
-      if(!ok) navigate('/admin/login')
-    } catch {
-      // Ignore localStorage access issues and keep the admin guard non-blocking.
+    let mounted = true;
+    const checkSession = async () => {
+      const ok = await verifyAdminSession();
+      if (mounted && ok) {
+        setAuthChecked(true);
+      }
     }
-  },[navigate])
+    checkSession();
+    return () => {
+      mounted = false;
+    };
+  },[])
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   
@@ -29,8 +34,10 @@ export const Dashboard = () => {
   const [showBlogForm, setShowBlogForm] = useState(false);
 
   useEffect(() => {
-    fetchProjects();
-  }, []);
+    if (authChecked) {
+      fetchProjects();
+    }
+  }, [authChecked]);
 
   const fetchProjects = async () => {
     try {

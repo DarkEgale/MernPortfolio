@@ -48,6 +48,28 @@ export const Login = async (req, res) => {
     }
 };
 
+export const VerifyAdmin = async (req, res) => {
+    res.status(200).json({ success: true, message: 'Authenticated' });
+};
+
+export const Logout = async (req, res) => {
+    try {
+        const { token } = req.cookies || {};
+        if (token) {
+            await AccessToken.deleteOne({ token });
+        }
+
+        res.clearCookie('token', {
+            httpOnly: true,
+            secure: true,
+            sameSite: 'none',
+            partitioned: true,
+        }).status(200).json({ success: true, message: 'Logged out' });
+    } catch {
+        res.status(500).json({ success: false, message: 'Internal Server Error' });
+    }
+};
+
 // --- Register Controller ---
 export const Register = async (req, res) => {
     try {
