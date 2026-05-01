@@ -3,34 +3,49 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Home.scss";
 import shimul from "../../../assets/shimul.png";
-import { motion } from "framer-motion";
+import { motion as Motion } from "framer-motion";
 import API_HOST from '../../../config/api'
+import { ProjectCardSkeleton } from "../../../Components/Common/Skeleton/Skeleton";
 
 export const Home = () => {
   const [projects, setProjects] = useState([]);
+  const [loadingProjects, setLoadingProjects] = useState(true);
+  const [projectsError, setProjectsError] = useState(null);
   const navigate=useNavigate()
   useEffect(() => {
+    let mounted = true;
     const fetchProjects = async () => {
-      const res = await fetch(`${API_HOST}/api/public/projects`, {
-        method: "GET",
-      });
-      if (!res.ok) {
+      try {
+        const res = await fetch(`${API_HOST}/api/public/projects`, {
+          method: "GET",
+        });
+        if (!res.ok) {
+          throw new Error("Failed to load projects");
+        }
         const data = await res.json();
-        throw new Error(res.message);
-        return;
+        if (mounted) {
+          setProjects(Array.isArray(data.projects) ? data.projects : []);
+        }
+      } catch (error) {
+        if (mounted) {
+          setProjectsError(error.message);
+        }
+      } finally {
+        if (mounted) {
+          setLoadingProjects(false);
+        }
       }
-      const data = await res.json();
-      setProjects(data.projects);
-      console.log(data);
     };
     fetchProjects();
+    return () => {
+      mounted = false;
+    };
   }, []);
-  console.log(projects);
   return (
     <>
       <section className="hero-section">
         <div className="container">
-          <motion.div
+          <Motion.div
             className="hero-content"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -48,12 +63,12 @@ export const Home = () => {
               <button className="btn-primary" onClick={()=>navigate('/projects')}>View My Work</button>
               <button className="btn-outline"><a href="https://drive.google.com/file/d/1CnsJlZg-4VhrdZasqcl6pgv3MJBgkr9p/view?usp=sharing" style={{color:'black'}}>Download Resume</a></button>
             </div>
-          </motion.div>
+          </Motion.div>
         </div>
       </section>
 
       <section className="home-about">
-        <motion.div
+        <Motion.div
           className="about-container"
           initial={{ opacity: 0, scale: 0.1 }}
           whileInView={{ opacity: 1, scale: 1 }}
@@ -83,7 +98,7 @@ export const Home = () => {
               <button className="btn-primary"onClick={()=>navigate('/about')}>Read More</button>
             </div>
           </div>
-        </motion.div>
+        </Motion.div>
       </section>
 
       <section className="projects-section">
@@ -96,7 +111,15 @@ export const Home = () => {
           </div>
 
           <div className="projects-grid">
-            {projects.length > 0 ? (
+            {loadingProjects ? (
+              Array.from({ length: 4 }).map((_, index) => (
+                <ProjectCardSkeleton key={index} />
+              ))
+            ) : projectsError ? (
+              <div className="no-projects">
+                <p>{projectsError}</p>
+              </div>
+            ) : projects.length > 0 ? (
               projects
                 .slice(0, 4)
                 .map((p) => (

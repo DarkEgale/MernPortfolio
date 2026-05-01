@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import './Blog.scss'
 import BlogCard from '../../../Components/Public/Cards/BlogCard/BlogCard'
 import API_HOST from '../../../config/api'
+import { BlogCardSkeleton } from '../../../Components/Common/Skeleton/Skeleton'
 
 const Blog = () => {
   const [posts, setPosts] = useState([])
@@ -36,7 +37,9 @@ const Blog = () => {
       </div>
 
       <div className="container blog-grid">
-        {loading && <p>Loading posts…</p>}
+        {loading && Array.from({ length: 6 }).map((_, index) => (
+          <BlogCardSkeleton key={index} index={index} />
+        ))}
         {error && <p className="error">{error}</p>}
         {!loading && !error && posts.length === 0 && <p>No posts found.</p>}
         {!loading && !error && posts.map((post, index) => (

@@ -1,9 +1,10 @@
 import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion as Motion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import "./ProjectsDetails.scss";
 import API_HOST from '../../../config/api'
+import { ProjectDetailsSkeleton } from "../../../Components/Common/Skeleton/Skeleton";
 
 export const ProjectDetails = () => {
     const { id } = useParams();
@@ -45,7 +46,7 @@ export const ProjectDetails = () => {
         }
     };
 
-    if (loading) return <div className="loading">Loading Project...</div>;
+    if (loading) return <ProjectDetailsSkeleton />;
     
     if (!project || !project.title) return <div className="error">Project not found.</div>;
 
@@ -53,9 +54,9 @@ export const ProjectDetails = () => {
         <main className="project-details">
             <div className="container">
                 <header className="project-header">
-                    <motion.h1 initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+                    <Motion.h1 initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
                         {project.title}
-                    </motion.h1>
+                    </Motion.h1>
                     
                     <div className="tech-stack">
                         {project.techStack?.map((tech, i) => (

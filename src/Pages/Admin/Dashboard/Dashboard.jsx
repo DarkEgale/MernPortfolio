@@ -7,6 +7,7 @@ import Sidebar from '../../../Components/Admin/Sidebar/Sidebar'
 import BlogForm from '../../../Components/Admin/BlogForm/BlogForm'
 import "./Dashboard.scss";
 import API_HOST from '../../../config/api'
+import { TableSkeleton } from '../../../Components/Common/Skeleton/Skeleton'
 
 export const Dashboard = () => {
   const navigate = useNavigate()
@@ -14,8 +15,10 @@ export const Dashboard = () => {
     try{
       const ok = localStorage.getItem('adminAuth') === 'true'
       if(!ok) navigate('/admin/login')
-    }catch(e){ /* ignore */ }
-  },[])
+    } catch {
+      // Ignore localStorage access issues and keep the admin guard non-blocking.
+    }
+  },[navigate])
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   
@@ -129,7 +132,7 @@ export const Dashboard = () => {
 
           <section className="table-section">
             {loading ? (
-              <p>Loading projects...</p>
+              <TableSkeleton rows={6} columns={2} />
             ) : (
               <table className="project-table">
                 <thead>

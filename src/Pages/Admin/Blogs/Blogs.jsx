@@ -4,6 +4,7 @@ import BlogForm from '../../../Components/Admin/BlogForm/BlogForm'
 import './Blogs.scss'
 import { Pencil, Trash2, Menu, X } from 'lucide-react'
 import API_HOST from '../../../config/api'
+import { TableSkeleton } from '../../../Components/Common/Skeleton/Skeleton'
 
 export const Blogs = () => {
   const [blogs, setBlogs] = useState([])
@@ -71,7 +72,7 @@ export const Blogs = () => {
 
           <section className="blogs-table">
             {loading ? (
-              <p>Loading...</p>
+              <TableSkeleton rows={6} columns={3} />
             ) : (
               <table>
                 <thead>

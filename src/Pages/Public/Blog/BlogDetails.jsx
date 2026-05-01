@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import "./BlogDetails.scss";
 import API_HOST from "../../../config/api";
+import { BlogDetailsSkeleton } from "../../../Components/Common/Skeleton/Skeleton";
 
 const BlogDetails = () => {
   const { id } = useParams();
@@ -31,7 +32,7 @@ const BlogDetails = () => {
     };
   }, [id]);
 
-  if (loading) return <p className="container">Loading…</p>;
+  if (loading) return <BlogDetailsSkeleton />;
   if (error) return <p className="container error">{error}</p>;
   if (!post) return <p className="container">Post not found.</p>;
 
