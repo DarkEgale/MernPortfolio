@@ -1,6 +1,15 @@
 import API_HOST from '../config/api';
 
 const LOGIN_PATH = '/admin/login';
+const ADMIN_PATH_PREFIX = '/admin';
+const ADMIN_API_MARKER = '/api/admin/';
+
+const isAdminPage = () => window.location.pathname.startsWith(ADMIN_PATH_PREFIX);
+
+const isAdminApiUrl = (url) => {
+  const value = typeof url === 'string' ? url : url?.url;
+  return Boolean(value?.includes(ADMIN_API_MARKER));
+};
 
 export const clearAdminSession = () => {
   try {
@@ -11,7 +20,7 @@ export const clearAdminSession = () => {
 };
 
 export const redirectToAdminLogin = () => {
-  if (window.location.pathname !== LOGIN_PATH) {
+  if (isAdminPage() && window.location.pathname !== LOGIN_PATH) {
     window.location.replace(LOGIN_PATH);
   }
 };
@@ -37,7 +46,7 @@ export const logoutAdmin = async () => {
 };
 
 export const handleAdminAuthResponse = (response) => {
-  if (response.status === 401 || response.status === 403) {
+  if ((response.status === 401 || response.status === 403) && isAdminApiUrl(response.url)) {
     forceAdminLogout();
     return false;
   }
@@ -56,6 +65,10 @@ export const adminFetch = async (url, options = {}) => {
 };
 
 export const verifyAdminSession = async () => {
+  if (!isAdminPage()) {
+    return true;
+  }
+
   const isMarkedLoggedIn = (() => {
     try {
       return localStorage.getItem('adminAuth') === 'true';
