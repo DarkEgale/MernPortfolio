@@ -18,10 +18,10 @@ function App() {
   const navLinks=[
     {name:'Home',path:'/',end:true},
     {name:'About me',path:'/about'},
-    {name:'Blog',path:'/blog'},
+    {name:'Blogs',path:'/blog'},
     {name:'Services',path:'/services'},
     {name:'Projects',path:'/projects'},
-    {name:'Contact',path:'/Contact'}
+    {name:'Contact',path:'/contact'}
   ]
   return (
     <>

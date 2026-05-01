@@ -26,11 +26,14 @@ export const Footer = () => {
                 </div>
 
                 <div className="footer-bottom">
-                    <p>&copy; {currentYear} YourName. All rights reserved.</p>
+                    <p>&copy; {currentYear} MD SHIMUL HOSSEN. All rights reserved.</p>
                     <div className="footer-links">
                         <Link title="Home" to="/">Home</Link>
                         <Link title="Projects" to="/projects">Projects</Link>
                         <Link title="About" to="/about">About</Link>
+                        <Link title="Blogs" to="/blogs">Blogs</Link>
+                        <Link title="Services" to="/services">Services</Link>
+                        <Link title="Contact" to="/contact">Contact</Link>
                     </div>
                 </div>
             </div>
