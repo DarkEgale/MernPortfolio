@@ -16,11 +16,11 @@ export const ProjectsControllers=async(req,res)=>{
 export const singleProject=async(req,res)=>{
     try{
         const {id}=req.params
-        console.log(id)
         const project=await Projects.findById(id)
-        if(project){
-            res.status(200).json({sucess:true,project})
+        if(!project){
+            return res.status(404).json({sucess:false,message:'Project not found'})
         }
+        res.status(200).json({sucess:true,project})
     }catch(error){
         console.error(error);
         res.status(500).json({sucess:false,message:'Internal Server Error'})

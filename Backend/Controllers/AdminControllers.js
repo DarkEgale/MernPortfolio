@@ -1,8 +1,10 @@
+/* global process */
 import Admin from "../Schema/UserSchema.js";
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import Projects from "../Schema/ProjectSchema.js";
 import { uploadToCloudinary } from "../Middleware/uploadCloudinary.js";
+import AccessToken from "../Schema/AcessToken.js";
 import sharp from 'sharp';
 
 // --- Login Controller ---
@@ -21,6 +23,14 @@ export const Login = async (req, res) => {
         }
 
         const token = jwt.sign({ id: admin._id }, process.env.SECRET, { expiresIn: '1d' });
+        
+        if (token) {
+            await AccessToken.create({
+                token,
+                userId: admin._id,
+                expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000)
+            });
+        }
 
         res.cookie('token', token, {
             httpOnly: true,
@@ -33,7 +43,7 @@ export const Login = async (req, res) => {
             message: 'Login Successful',
             admin: { id: admin._id, email: admin.email }
         });
-    } catch (error) {
+    } catch {
         res.status(500).json({ success: false, message: 'Internal Server Error' });
     }
 };
@@ -63,7 +73,7 @@ export const Register = async (req, res) => {
             message: 'Registration Successful',
             admin: { email: user.email, id: user._id }
         });
-    } catch (error) {
+    } catch {
         res.status(500).json({ success: false, message: 'Internal Server Error' });
     }
 };
@@ -72,8 +82,7 @@ export const Register = async (req, res) => {
 export const createProjects = async (req, res) => {
     try {
         const data = req.body;
-        
-        console.log(req.files)
+
         let thumbnailUrl = '';
         if (req.files?.thumbnail) {
             const buffer = await sharp(req.files.thumbnail[0].buffer)
@@ -122,7 +131,7 @@ export const deleteProject = async (req, res) => {
 
         await Projects.findByIdAndDelete(id);
         res.status(200).json({ success: true, message: 'Project was deleted' });
-    } catch (error) {
+    } catch {
         res.status(500).json({ success: false, message: 'Internal Server Error' });
     } 
 };
@@ -131,10 +140,6 @@ export const updateProjects = async (req, res) => {
     try {
         const { id } = req.params;
         let updateData = { ...req.body };
-        console.log(updateData)
-        const parsedTech = JSON.parse(req.body.techStack);
-                
-        updateData.techStack = Array.isArray(parsedTech) ? parsedTech : [parsedTech];
 
         const project = await Projects.findById(id);
         if (!project) {
@@ -168,7 +173,7 @@ export const updateProjects = async (req, res) => {
         const updatedProject = await Projects.findByIdAndUpdate(
             id, 
             { $set: updateData }, 
-            { new: true }
+            { new: true, runValidators: true }
         );
 
         res.status(200).json({ 

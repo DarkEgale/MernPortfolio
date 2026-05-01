@@ -6,6 +6,7 @@ import cors from 'cors';
 import publicRoute from './Router/Public/publicRoute.js';
 import adminRouter from './Router/Admin/adminRouter.js';
 import rateLimit from 'express-rate-limit';
+import multer from 'multer';
 
 
 dotenv.config();
@@ -37,6 +38,26 @@ app.use('/api/',apiLimiter)
 app.use('/api/public',publicRoute)
 app.use('/api/admin',adminRouter)
 
+app.use((err, req, res, next) => {
+    if (err instanceof multer.MulterError) {
+        return res.status(400).json({
+            success: false,
+            message: 'File upload validation failed',
+            errors: { file: err.message },
+        });
+    }
+
+    if (err?.message === 'Only image files are allowed') {
+        return res.status(400).json({
+            success: false,
+            message: 'File upload validation failed',
+            errors: { file: err.message },
+        });
+    }
+
+    next(err);
+});
+
 // expose a lightweight routes listing for debugging deployments
 function listRegisteredRoutes() {
     const routes = []
@@ -61,7 +82,7 @@ app.get('/routes', (req, res) => {
     try {
         const routes = listRegisteredRoutes()
         res.json({ success: true, routes })
-    } catch (err) {
+    } catch {
         res.status(500).json({ success: false, message: 'Failed to enumerate routes' })
     }
 })
@@ -75,5 +96,3 @@ console.log('[ROUTES]', JSON.stringify(_routes, null, 2))
 
 
 export default app;
-
-
