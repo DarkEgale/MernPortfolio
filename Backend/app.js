@@ -16,8 +16,26 @@ const app=express()
 app.use(express.json())
 app.use(morgan('dev'))
 app.use(cookieParser())
+const allowedOrigins = [
+    'https://www.mdshimulhossen.top',
+    'https://mdshimulhossen.top',
+];
+
+const isAllowedOrigin = (origin) => {
+    if (!origin) return true;
+    if (allowedOrigins.includes(origin)) return true;
+    return /^https:\/\/[a-z0-9-]+\.vercel\.app$/i.test(origin);
+};
+
 app.use(cors({
-    origin: ['https://www.mdshimulhossen.top', 'https://mdshimulhossen.top'], 
+    origin: (origin, callback) => {
+        if (isAllowedOrigin(origin)) {
+            callback(null, true);
+            return;
+        }
+
+        callback(new Error('Not allowed by CORS'));
+    },
     credentials: true, 
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization']
