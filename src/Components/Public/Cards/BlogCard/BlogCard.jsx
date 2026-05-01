@@ -13,7 +13,7 @@ const BlogCard = ({ post, index = 0 }) => {
         <h3 className="title">{post.title}</h3>
         <p className="excerpt">{post.excerpt || post.subtitle}</p>
         <div className="meta">
-          <span className="date">{typeof post.date === 'string' ? post.date : new Date(post.date).toDateString()}</span>
+          <span className="date">{typeof post.date === 'string' ? post.date : new Date(post.date).toLocaleDateString([], { year: 'numeric', month: 'long', day: 'numeric' })}</span>
           <Link
             className="read-more"
             to={`/blog/${post._id || post.id}`}
