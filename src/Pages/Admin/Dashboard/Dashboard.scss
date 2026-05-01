@@ -61,6 +61,7 @@
         align-items: flex-start;
         /* no extra offset here — container + inner padding create the ~100px gap */
         margin-top: 0;
+        width: 100%;
 
         .project-table {
             width: 100%;
